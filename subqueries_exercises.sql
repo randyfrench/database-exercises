@@ -42,8 +42,9 @@ FROM titles
 WHERE emp_no IN (
 		SELECT emp_no
 		FROM employees
-		WHERE first_name = "Aamod"
-		AND to_date > NOW());
+		WHERE first_name = "Aamod")
+		AND emp_no IN (
+		to_date > NOW());
 		   
 			
 
@@ -60,7 +61,7 @@ FROM employees
 WHERE emp_no IN (
 		SELECT emp_no
 		FROM dept_emp
-		WHERE to_date < NOW() -- 85,108
+		WHERE to_date < CURDATE() -- 85,108
 );
 
 /* Q4 Find all the current department managers that are female. List their names in a comment in your code.*/
@@ -78,14 +79,14 @@ FROM employees
 WHERE emp_no IN (
 		SELECT emp_no
 		FROM salaries
-		WHERE salary > (select AVG(salary) from salaries) AND to_date > NOW()
-);
+		WHERE salary > (select AVG(salary) from salaries) AND to_date > CURDATE()
+); -- 154543 rows
 
 
 /* Q6 How many current salaries are within 1 standard deviation of the current highest salary? (Hint: you can use a built in function to calculate the standard deviation.) What percentage of all salaries is this?*/
 SELECT COUNT(salary)
 FROM salaries
-WHERE salaries.to_date >= NOW()
+WHERE salaries.to_date >= CURDATE())
 		AND salary >= 
 		(SELECT MAX()(salary)
 		FROM salaries
@@ -93,6 +94,10 @@ WHERE salaries.to_date >= NOW()
 		(SELECT STDDEV(salary)
 		FROM salaries
 		WHERE salaries.to_date >= NOW());
+		
+SELECT MAX(salary) - STDDEV(salary)
+FROM salaries
+WHERE to_date > CURDATE();		
 #BONUS
 
     #Find all the department names that currently have female managers.
@@ -102,8 +107,17 @@ WHERE salaries.to_date >= NOW()
 
     #Find the first and last name of the employee with the highest salary.
 SELECT MAX(salary)
-FROM salaries
-WHERE to_date > curdate();
+FROM employees
+WHERE emp_no
+		SELECT emp_no
+		FROM salaries
+		WHERE to_date > curdate();
+		
+GROUP BY ;
+
+SELECT emp_no
+		FROM salaries
+		WHERE to_date > curdate();
     #Find the department name that the employee with the highest salary works in.
 
 
